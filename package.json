@@ -1,5 +1,5 @@
 {
-  "name": "eventora",
+  "name": "eventa",
   "private": true,
   "version": "1.0.0",
   "description": "Root scripts for Eventora client and server",
