@@ -1,0 +1,16 @@
+{
+  "name": "event-booking-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "client": "npm run dev --prefix Client",
+    "server": "npm run dev --prefix Server",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install:all": "concurrently \"npm install --prefix Server\" \"npm install --prefix Client\"",
+    "build": "npm install --prefix Server && npm install --prefix Client && npm run build --prefix Client",
+    "start": "npm start --prefix Server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
