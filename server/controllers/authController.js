@@ -50,12 +50,36 @@ exports.login = async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
         if (!user.isVerified && user.role !== 'admin') {
-            const otp = generateOTP();
-            await OTP.findOneAndDelete({ email: user.email, action: 'account_verification' });
-            await OTP.create({ email: user.email, otp, action: 'account_verification' });
-            await sendOTPEmail(user.email, otp, 'account_verification');
-            return res.status(403).json({ message: 'Account not verified', needsVerification: true, email: user.email });
-        }
+    const otp = generateOTP();
+    console.log("Generated OTP:", otp);
+
+    await OTP.findOneAndDelete({
+        email: user.email,
+        action: 'account_verification'
+    });
+
+    const savedOTP = await OTP.create({
+        email: user.email,
+        otp,
+        action: 'account_verification'
+    });
+
+    console.log("Saved OTP:", savedOTP);
+
+    await sendOTPEmail(
+        user.email,
+        otp,
+        'account_verification'
+    );
+
+    console.log("OTP email sent successfully");
+
+    return res.status(403).json({
+        message: 'Account not verified',
+        needsVerification: true,
+        email: user.email
+    });
+}
 
         res.json({
             _id: user.id,
