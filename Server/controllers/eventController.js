@@ -44,7 +44,6 @@ exports.createEvent = async (req, res) => {
     }
 };
 
-// Update and delete events (admin only)
 exports.updateEvent = async (req, res) => {
     try {
         const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });

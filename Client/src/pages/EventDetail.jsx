@@ -52,7 +52,7 @@ const EventDetail = () => {
                 setEvent({ ...event, availableSeats: event.availableSeats - 1 });
             }
         } catch (err) {
-            setError(err.response?.data?.error || err.response?.data?.message || err.message || 'Booking failed');
+            setError(err.response?.data?.message || 'Booking failed');
         } finally {
             setBookingLoading(false);
         }

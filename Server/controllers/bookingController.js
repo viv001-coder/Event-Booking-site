@@ -17,7 +17,6 @@ exports.sendBookingOTP = async (req, res) => {
     }
 };
 
-// Book an event
 exports.bookEvent = async (req, res) => {
     try {
         const { eventId, otp } = req.body;
@@ -53,7 +52,6 @@ exports.bookEvent = async (req, res) => {
     }
 };
 
-// Admin confirms booking and optionally updates payment status
 exports.confirmBooking = async (req, res) => {
     try {
         const { paymentStatus } = req.body; // 'paid' or 'not_paid'
@@ -96,7 +94,6 @@ exports.getMyBookings = async (req, res) => {
     }
 };
 
-// Cancel booking (user can cancel their own bookings, admin can cancel any booking)
 exports.cancelBooking = async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id);

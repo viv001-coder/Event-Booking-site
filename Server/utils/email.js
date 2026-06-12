@@ -4,13 +4,6 @@ const dotenv = require('dotenv');
 // Load environment variables from .env file
 dotenv.config();
 
-const ensureEmailConfigured = () => {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        throw new Error('EMAIL_USER and EMAIL_PASS must be set to send OTP emails.');
-    }
-};
-
-// Configure nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -18,15 +11,6 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS
     }
 });
-
-if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    transporter.verify().then(() => {
-        console.log('Email transporter verified successfully.');
-    }).catch((error) => {
-        console.error('Email transporter verification failed:', error.message || error);
-    });
-}
-
 // Function to send booking confirmation email
 const sendBookingEmail = async (userEmail, userName, eventTitle) => {
     try {
@@ -44,13 +28,12 @@ const sendBookingEmail = async (userEmail, userName, eventTitle) => {
         console.log('Email sent successfully to', userEmail);
     } catch (error) {
         console.error('Error sending email:', error);
-        throw error;
     }
 };
-// Function to send OTP email for account verification or booking verification
+
 const sendOTPEmail = async (userEmail, otp, type) => {
     try {
-        const title = type === 'account_verification' ? 'Verify your Account' :  'Booking Verification';
+        const title = type === 'account_verification' ? 'Verify your Eventa Account' : 'Eventa Booking Verification';
         const msg = type === 'account_verification'
             ? 'Please use the following OTP to verify your new Eventa account.'
             : 'Please use the following OTP to verify and confirm your event booking.';
@@ -74,8 +57,7 @@ const sendOTPEmail = async (userEmail, otp, type) => {
         console.log(`OTP sent to ${userEmail} for ${type}`);
     } catch (error) {
         console.error('Error sending OTP email:', error);
-        throw error;
     }
 };
-// Export the functions
+
 module.exports = { sendBookingEmail, sendOTPEmail };
