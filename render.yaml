@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: event-booking-site
+    runtime: node
+    repo: https://github.com/viv001-coder/Event-Booking-site
+    branch: main
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
